@@ -1,0 +1,28 @@
+{
+  "name": "motosega",
+  "version": "1.0.0",
+  "description": "a markdown to html tool.",
+  "main": "dist/index.js",
+  "scripts": {
+    "babel": "babel src/ --out-dir dist/",
+    "start": "npm run babel && node dist/index.js",
+    "test": "npm run babel && jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mxtetrachord/motosega.git"
+  },
+  "author": "autumn crossan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mxtetrachord/motosega/issues"
+  },
+  "homepage": "https://github.com/mxtetrachord/motosega#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.39",
+    "@babel/core": "^7.0.0-beta.39",
+    "@babel/preset-env": "^7.0.0-beta.39",
+    "babel-cli": "^7.0.0-beta.0",
+    "jasmine": "^3.0.0"
+  }
+}
