@@ -6,6 +6,7 @@
   "scripts": {
     "babel": "babel src/ --out-dir dist/",
     "flow": "flow",
+    "prepublish": "npm run babel",
     "test": "npm run babel && npm run flow && jasmine"
   },
   "repository": {
