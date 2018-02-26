@@ -7,7 +7,7 @@ const pipe = <T>(init: T, ...funcs: Array<Function>): T =>
   funcs.reduce((val: T, func: Function): T => func(val), init)
 
 const replace = (str: string, chr: string, tag: string): string => 
-  str.match(new RegExp(`\\${ chr }.+\\${ chr }`))
+  str.match(new RegExp(`\\${ chr }.*?\\${ chr }`))
     ? `<${ tag }>${ stripChars(str, chr) }</${ tag }>`
     : str
 
