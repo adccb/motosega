@@ -9,17 +9,23 @@ describe('motosega', () => {
   })
 
   it('should correctly convert md', () => {
-    expect(convert('*hello!*')).toEqual('<b>hello!</b>')
-    expect(convert('_hello!_')).toEqual('<i>hello!</i>')
-    expect(convert('`hello!`')).toEqual('<code>hello!</code>')
+    const o = {
+      'foo `bar` baz': 'foo <code>bar</code> baz',
+      '*foo* bar *baz*': '<b>foo</b> bar <b>baz</b>',
+      '* foo *': '* foo *',
+      '**': '<b></b>',
+      'foo *bar _baz* qux _zum_': 'foo <b>bar _baz</b> qux <i>zum</i>',
+      '`*this* is a *****bunch of literals** inside a _code__ tag**__`':
+        '<code>*this* is a *****bunch of literals** inside a _code__ tag**__</code>'
+    }
+
+    Object.keys(o).forEach(k => expect(convert(k)).toEqual(o[k]))
   })
 
   it('should correctly convert nested md', () => {
-    expect(convert('`*hello!*`')).toEqual('<code><b>hello!</b></code>')
-  })
-
-  it('should correctly convery siblings', () => {
-    expect(convert('*foo* bar *baz*')).toEqual('<b>foo</b> bar <b>baz</b>')
+    expect(convert('*_hello!_*')).toEqual('<b><i>hello!</i></b>')
+    expect(convert('_hi *hello*_')).toEqual('<i>hi <b>hello</b></i>')
+    expect(convert('`*hello*`')).toEqual('<code>*hello*</code>')
   })
 })
 

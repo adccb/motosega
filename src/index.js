@@ -1,19 +1,16 @@
-// @flow
+const lookup = new Map([
+  [ '`', { tag: 'code', rec: false } ],
+  [ '*', { tag: 'b', rec: true } ], 
+  [ '_', { tag: 'i', rec: true } ],
+])
 
-const stripChars = (str: string, chr: string): string => 
-  str.replace(new RegExp(`\\${ chr }`, 'g'), '')
+export const convert = str =>
+  str.replace(new RegExp('(\\`|\\*|\\_)([^\s]*?)\\1', 'g'), 
+    (match, g1, g2) => {
+      return [
+        `<${ lookup.get(g1).tag }>`,
+        `${ lookup.get(g1).rec ? convert(g2) : g2 }`,
+        `</${ lookup.get(g1).tag }>`
+      ].join('')
+    })
 
-const pipe = <T>(init: T, ...funcs: Array<Function>): T => 
-  funcs.reduce((val: T, func: Function): T => func(val), init)
-
-const replace = (str: string, chr: string, tag: string): string => 
-  str.match(new RegExp(`\\${ chr }.*?\\${ chr }`))
-    ? `<${ tag }>${ stripChars(str, chr) }</${ tag }>`
-    : str
-
-export const convert = (str: string): string => pipe(
-  str, 
-  str => replace(str, '*', 'b'),
-  str => replace(str, '_', 'i'), 
-  str => replace(str, '`', 'code')
-)
